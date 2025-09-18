@@ -1,0 +1,139 @@
+Ý tưởng thực hành làm 1 shop xe đạp để thực hành cả react front end và node.js back end
+
+1. Ý tưởng tổng thể:
+-trang bán xe có những phần như sau:
++trang home, kèm danh sách sản phẩm luôn /
++trang privacy /pages/privacy
++trang faq /pages/faq
++trang contact /pages/contact
++trang chính sách sử dụng /policies/terms-of-service
++trang chính sách hoàn tiền /policies/refund-policy
+
+-liên quan đến danh sách sản phẩm 
++trang danh sách tất cả các sản phẩm /collections/all
++trang danh sách xe đạp /collections/road-bike
++trang danh sách sườn xe đạp /collections/frame
++trang danh sách vành carbon /collections/wheel
+
+-liên quan đến chi tiết 1 sản phẩm
++trang một sản phẩm xe đạp /collections/road-bike/products/:slug(tên của xe đạp)
++trang một sản phẩm sườn xe đạp /collections/frame/products/:slug(tên của sườn xe đạp)
++trang một sản phẩm vành carbon /collections/wheel/products/:slug(tên của vành xe đạp)
+
+-liên quan đến login, tạo tài khoản:
++trang login /account/login
++trang tạo tài khoản /account/register
+
+-khi login được rồi sẽ có 2 trang
++trang cá nhân của khách hàng, có thông tin khách và lịch sử mua hàng /account/user/:id
++trang của admin, quản lý hàng, có thể thêm sửa xóa thông tin hàng /account/admin/products
+/account/admin/products
+/account/admin/orders
+/account/admin/users
+
+-liên quan đến giỏ hàng
++giỏ hàng có thể xem ở bất kỳ trang nào, kiểu như modal vậy
++và có hẳn 1 trang để xem giỏ hàng luôn /cart
+
+-liên quan đến thanh toán, check out
++trang checkout /checkout
+
+Cây sơ đồ của app
+home (host)
+|
+|--pages
+|    |--privacy (xử lý thông tin cá nhân)
+|    |--faq (những câu hỏi thường gặp)
+|    |--contact (liên hệ)
+|
+|--policies
+|    |--terms-of-service (điều khoản dịch vụ)
+|    |--refund-policy (chính sách hoàn tiền)
+|
+|--collections
+|    |--all
+|    |--road-bike
+|    |--frame
+|    |--wheel
+|    |--products/:slug
+|    |--search
+|
+|--account
+|    |--login
+|    |--register
+|    |--user/:id
+|    |--admin
+|        |--products (quản lý sản phẩm)
+|        |--orders (quản lý đơn hàng)
+|        |--users (quản lý users)
+|
+|--cart
+|
+|--checkout (layout riêng)
+|
+|--not found (ngoài những địa chỉ quy định trên thì là 404 - Page Not Found)
+
+
+2. phân tích dữ liệu, cần có 3 collection
+Dữ liệu cần có: 
+-collection về products
+-collection về users
+-collection về đơn hàng orders
+
+-một document của collection products:
++loại sản phẩm: (xe hay sườn hay vành?)
++ảnh sản phẩm: 1 list danh sách ảnh của sản phẩm, sẽ khoảng 10~20 ảnh tùy loại sản phẩm
++tên
++giá
++description: 
+  năm sản xuất, 
+  size, 
+  trọng lượng,
+  size info: (không dành cho vành)
+    top tube,
+    seat tube,
+  spec info: (không dành cho vành và sườn)
+    group,
+    wheel,
+  condition:
+
+
+-một document của collection users:
++tên
++địa chỉ
++phone
++email
++password
+role (phân biệt admin hay user thường)
++lịch sử mua hàng của user đó
+  order number
+  date
+  tình trạng payment
+  tình trạng ship
+  số tiền của order
+
+-một document của collection đơn hàng orders (dành cho admin)
++order number
++date
++tình trạng payment
++tình trạng ship
++số tiền của order
++user:
+  userId,
+  name,
+  địa chỉ,
+  email,
+  phone
++items:
+  productId,
+  name,
+  price,
+  quanlity,
+
+
+
+
+
+
+
+

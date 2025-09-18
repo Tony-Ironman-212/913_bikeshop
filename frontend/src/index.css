@@ -1,0 +1,13 @@
+@import 'tailwindcss';
+
+:root {
+  --color-primary: #9f8561;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.8;
+}

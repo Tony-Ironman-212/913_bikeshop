@@ -1,0 +1,40 @@
+const express = require('express');
+const cors = require('cors');
+const mongoose = require('mongoose');
+require('dotenv').config();
+
+// import cá nhân
+// import routes
+const productRoutes = require('./routes/products');
+const uploadRoutes = require('./routes/upload');
+
+const app = express();
+const port = process.env.PORT || 3000;
+
+//middleware
+app.use(cors());
+app.use(express.json());
+
+//MongoDB Connection
+async function connectDB() {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log('✅ Connected to MongoDB');
+  } catch (err) {
+    console.error('Error connecting to MongoDB:', err);
+    process.exit(1); //dừng server vì DB không kết nối được
+  }
+}
+connectDB();
+
+//routes
+app.get('/', (req, res) => {
+  res.send('Hello World! test server is running');
+});
+app.use('/api/products', productRoutes);
+app.use('/api/upload', uploadRoutes);
+
+//start server
+app.listen(port, () => {
+  console.log(`✅ Server is running on http://localhost:${port}`);
+});
