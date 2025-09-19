@@ -61,7 +61,7 @@ function Header() {
   return (
     <header>
       <div className='bg-black text-white'>
-        <div className='mx-auto flex max-w-[1500px] justify-between gap-10 px-10 py-10'>
+        <div className='mx-auto flex max-w-[1500px] justify-between gap-10 px-10 py-6'>
           <Link onClick={() => setInputValue('')} to='/'>
             <img width={350} src='/img/specialized_logo.png' alt='' />
           </Link>

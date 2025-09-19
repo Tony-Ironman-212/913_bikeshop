@@ -52,14 +52,14 @@ home (host)
 |
 |--collections
 |    |--all
-|    |--road-bike
+|    |--bike
 |    |--frame
 |    |--wheel
 |    |--products/:slug
 |    |--search
 |
 |--account
-|    |--login
+|    |--login (làm thêm phần quên password)
 |    |--register
 |    |--user/:id
 |    |--admin
