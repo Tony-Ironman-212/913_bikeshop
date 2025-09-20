@@ -11,7 +11,7 @@ function Footer() {
   return (
     <footer>
       <div className='bg-black text-white'>
-        <div className='mx-auto flex max-w-[1500px] justify-between px-10 py-4'>
+        <div className='mx-auto flex max-w-[1500px] justify-between px-10 pt-6 pb-10'>
           <div className='flex flex-col gap-1'>
             <Link to='/privacy'>個人情報の取り扱いについて</Link>
             <Link to='/faq'>よくある質問</Link>

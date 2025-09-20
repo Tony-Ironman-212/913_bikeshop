@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 function Login() {
   const [isForgotDisplay, setIsForgotDisplay] = useState(false);
   return (
-    <div className='mx-auto my-10 max-w-[500px] px-5'>
+    <div className='mx-auto my-10 min-h-[530px] max-w-[500px] px-5'>
       {/* Login Form */}
       {!isForgotDisplay && (
         <form action='#' method='POST'>
