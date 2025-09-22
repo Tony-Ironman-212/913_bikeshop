@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 // import cá nhân
 import AccountInput from '../../components/AccountInput';
@@ -11,6 +12,9 @@ function Register() {
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
   const [isAgreed, setIsAgreed] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const navigate = useNavigate();
 
   // state lưu lỗi cho từng trường
   const [fieldErrors, setFieldErrors] = useState({
@@ -85,7 +89,6 @@ function Register() {
   // handle submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Submitting form...');
   };
 
   // handle chặn phím enter submit keydown enter
@@ -93,6 +96,53 @@ function Register() {
     if (e.key === 'Enter') {
       e.preventDefault();
     }
+  };
+
+  // tách riêng hàm submit register
+  const submitRegister = async () => {
+    try {
+      // gửi data lên saver bằng api đã được cung cấp sẵn, fetch
+      const response = await fetch('/api/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          lastName,
+          firstName,
+          email,
+          password,
+          isAgreed,
+        }),
+      });
+
+      // trường hợp đăng ký thất bại response.ok = false
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log('Error từ server:', errorData);
+        setSubmitError(errorData.message || '登録に失敗しました');
+        return;
+      }
+
+      // trường hợp thành công lấy data server trả về, và log ra,
+      const data = await response.json();
+      console.log(data);
+
+      // đăng ký thành công, đóng modal, và hiện ra 1 bảng thông báo đăng ký thành công, và có nút điều hướng qua trang login
+      setIsModalOpen(false);
+      alert('ユーザー登録が完了しました。ログイン画面に移動します');
+
+      // 👇 khi bấm OK alert, chạy tiếp và chuyển hướng
+      navigate('/account/login');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // handle cancel submit
+  const handleCancelSubmit = () => {
+    setSubmitError('');
+    setIsModalOpen(false);
   };
 
   return (
@@ -194,7 +244,7 @@ function Register() {
         </fieldset>
         <button
           className='w-full rounded bg-[var(--color-primary)] p-2 text-white disabled:opacity-50'
-          type='submit'
+          type='button'
           disabled={
             Object.values(fieldErrors).some((error) => error !== '') ||
             !lastName ||
@@ -204,6 +254,7 @@ function Register() {
             !passwordCheck ||
             !isAgreed
           }
+          onClick={() => setIsModalOpen(true)}
         >
           アカウントを作成する
         </button>
@@ -211,6 +262,40 @@ function Register() {
           <Link to='/account/login'>ログイン画面に戻る</Link>
         </p>
       </form>
+
+      {/* model xác nhận */}
+      {isModalOpen && (
+        <div className='fixed inset-0 flex items-center justify-center bg-black/50'>
+          <div className='w-[500px] rounded bg-white p-5'>
+            <h2 className='text-center text-xl font-bold'>確認</h2>
+            <p className='mb-4 text-center'>
+              ↓以下の内容でアカウントを作成します↓
+            </p>
+            <ul className='space-y-1'>
+              <li>姓: {lastName}</li>
+              <li>名: {firstName}</li>
+              <li>Email: {email}</li>
+              <li>パスワード: {'*'.repeat(password.length)}</li>
+              <li>利用規約に同意: {isAgreed ? 'はい' : 'いいえ'}</li>
+            </ul>
+            {submitError && <p className='text-red-500'>{submitError}</p>}
+            <div className='mt-5 flex justify-center gap-5'>
+              <button
+                className='w-full rounded bg-gray-200 p-2 text-black'
+                onClick={handleCancelSubmit}
+              >
+                キャンセル
+              </button>
+              <button
+                className='w-full rounded bg-[var(--color-primary)] p-2 text-white'
+                onClick={submitRegister}
+              >
+                確定する
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

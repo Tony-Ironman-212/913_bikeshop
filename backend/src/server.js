@@ -5,8 +5,9 @@ require('dotenv').config();
 
 // import cá nhân
 // import routes
-const productRoutes = require('./routes/products');
-const uploadRoutes = require('./routes/upload');
+const productRoutes = require('./routes/productRoutes');
+const userRoutes = require('./routes/userRoutes');
+const uploadRoutes = require('./routes/uploadRoutes');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -32,6 +33,7 @@ app.get('/', (req, res) => {
   res.send('Hello World! test server is running');
 });
 app.use('/api/products', productRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api/upload', uploadRoutes);
 
 //start server
