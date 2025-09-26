@@ -23,7 +23,6 @@ function Login() {
 
   // trang trước đó trước khi login, để điều hướng về lại
   const from = location.state?.from?.pathname || '/';
-  console.log('from:', from);
 
   // handle change cho từng trường
   const handleChange = (field, value, validateField, password) => {
@@ -63,7 +62,7 @@ function Login() {
   // handle login
   const handleLogin = async () => {
     try {
-      // B1 gọi api login đã được cung cấp sẵn, fetch api
+      // B1 gọi api login đã được cung cấp sẵn, fetch api, để lấy kết quả từ server
       const response = await fetch('/api/users/login', {
         method: 'POST',
         headers: {
@@ -71,25 +70,35 @@ function Login() {
         },
         body: JSON.stringify({ email, password }),
       });
+      const data = await response.json();
+      console.log('data:', data);
+
       // B2 trường hợp login thất bại, response.ok = false
       if (!response.ok) {
-        const errorData = await response.json();
-        console.log('Error từ server:', errorData);
-        setSubmitError(errorData.message || 'ログインに失敗しました');
+        console.error('❌ Error từ server:', data);
+        setSubmitError(data.message || 'ログインに失敗しました');
         return;
       }
-      //B3 trường hợp login thành công, lấy data server trả về, log ra
-      const data = await response.json();
-      console.log('Login successful:', data);
 
-      //B4 gọi hàm login của context để lưu user vào context
-      await login(data.user, data.token);
+      //B3 gọi hàm login của context để lưu user vào context
+      login(data.user, data.token);
 
       //B5 điều hướng về trang trước đó
-      navigate(from, { replace: true });
+
+      data.user.isAdmin
+        ? navigate('/account/admin/products', { replace: true })
+        : navigate(from, { replace: true });
     } catch (err) {
-      console.log(err);
+      console.error('🚨 Lỗi kết nối:', err);
+      setSubmitError('サーバーに接続できませんでした。');
     }
+  };
+
+  // handle reset password
+  const handleResetPassword = () => {
+    // giả lập gửi email thành công
+    alert('パスワード再設定用のメールを送信しました。');
+    setIsForgotDisplay(false);
   };
 
   return (
@@ -160,22 +169,26 @@ function Login() {
             パスワード再設定用のメールをお送りします。
           </h1>
 
-          <fieldset className='my-5 flex flex-col'>
-            <label htmlFor='email'>Email</label>
-            <input
-              className='border border-gray-300 p-2'
-              type='email'
-              id='email'
-              name='email'
-              required
-            />
-          </fieldset>
+          <AccountInput
+            label='Email'
+            type='email'
+            id='email'
+            placeholder='taro@example.com'
+            value={email}
+            onChange={(e) =>
+              handleChange('email', e.target.value, validateField)
+            }
+            onBlur={() => handleBlur('email', email, validateField)}
+            error={fieldErrors.emailError}
+          />
 
           <button
-            className='w-full rounded bg-[var(--color-primary)] p-2 text-white'
-            type='submit'
+            className='w-full rounded bg-[var(--color-primary)] p-2 text-white disabled:opacity-50'
+            type='button'
+            disabled={fieldErrors.emailError !== '' || email === ''}
+            onClick={handleResetPassword}
           >
-            決定
+            ログイン
           </button>
           <p
             className='my-5 cursor-pointer text-center'

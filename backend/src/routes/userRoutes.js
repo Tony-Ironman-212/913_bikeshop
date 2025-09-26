@@ -58,12 +58,14 @@ router.post('/login', async (req, res) => {
   try {
     // B1 nhận request thông tin tử frontend gửi lên
     const { email, password } = req.body;
+
     // B2 kiểm tra dữ liệu có thiếu hay không?
     if (!email || !password) {
       return res.status(400).json({
         message: 'すべてのフィールドを入力してください',
       });
     }
+
     // B3 tìm user trong DB theo email, nếu không thấy trả về lỗi
     const existingUser = await User.findOne({ email });
     if (!existingUser) {
@@ -71,6 +73,7 @@ router.post('/login', async (req, res) => {
         .status(400)
         .json({ message: 'メールまたはパスワードが間違っています' });
     }
+
     // B4 so khớp mật khẩu không, nếu sai trả về lỗi
     const isPasswordMatch = await bcrypt.compare(
       password,
@@ -81,6 +84,7 @@ router.post('/login', async (req, res) => {
         .status(400)
         .json({ message: 'メールまたはパスワードが間違っています' });
     }
+
     // B5 nếu thành công hết, trả về JWT token, kèm thèo user info cơ bản
     const token = jwt.sign(
       {
@@ -92,6 +96,7 @@ router.post('/login', async (req, res) => {
         expiresIn: '1h', // token có hạn trong 1 giờ
       }
     );
+
     res.status(200).json({
       message: 'ログインに成功しました',
       user: {

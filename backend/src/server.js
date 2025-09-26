@@ -8,6 +8,7 @@ require('dotenv').config();
 const productRoutes = require('./routes/productRoutes');
 const userRoutes = require('./routes/userRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
+const testTokenRoutes = require('./routes/testTokenRoutes');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -35,6 +36,7 @@ app.get('/', (req, res) => {
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/test-token', testTokenRoutes);
 
 //start server
 app.listen(port, () => {

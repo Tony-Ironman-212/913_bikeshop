@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faMagnifyingGlass,
@@ -10,6 +11,7 @@ import { faCircleUser } from '@fortawesome/free-regular-svg-icons';
 
 // import cá nhân
 import CartDropdown from './CartDropdown';
+import { useAuth } from '../context/authContext';
 
 function Header() {
   const [inputValue, setInputValue] = useState('');
@@ -18,6 +20,8 @@ function Header() {
   const [isCartShown, setIsCartShown] = useState(false);
   const inputElement = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { user } = useAuth();
 
   // load lịch sử từ localStorage khi component mount
   useEffect(() => {
@@ -55,7 +59,13 @@ function Header() {
 
   // xử lý khi click icon login
   const handleLoginClick = () => {
-    navigate('/account/login');
+    if (user) {
+      user.isAdmin
+        ? navigate('/account/admin/products')
+        : navigate(`/account/user/${user.id}`);
+    } else {
+      navigate('/account/login', { state: { from: location } });
+    }
     setInputValue('');
   };
   return (
@@ -104,14 +114,19 @@ function Header() {
             )}
           </div>
           <div className='flex items-center text-white'>
-            <span className='mr-1 hidden'>Tony212</span>
+            {user && <span className='mr-1'>{user.firstName}</span>}
             <div className='flex items-center gap-4'>
-              <button
-                className='cursor-pointer p-1 text-2xl'
-                onClick={handleLoginClick}
-              >
-                <FontAwesomeIcon icon={faCircleUser} />
-              </button>
+              <div className='relative'>
+                <button
+                  className='cursor-pointer p-1 text-2xl'
+                  onClick={handleLoginClick}
+                >
+                  <FontAwesomeIcon icon={faCircleUser} />
+                </button>
+                {user && (
+                  <span className='absolute top-[6px] right-[6px] block h-[10px] w-[10px] rounded-[50%] bg-green-400'></span>
+                )}
+              </div>
               <div className='relative'>
                 <button
                   id='cart-button'
@@ -137,4 +152,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default React.memo(Header);
