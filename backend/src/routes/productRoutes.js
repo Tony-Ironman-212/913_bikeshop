@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Product = require('../models/Product');
 
-//GET all products
+//GET api/products all products
 router.get('/', async (req, res) => {
   try {
     const products = await Product.find();
@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-//POST a new product
+//POST api/products a new product
 router.post('/', async (req, res) => {
   try {
     const product = new Product(req.body);
@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-//PATCH update a product by ID, partial update
+//PATCH api/products update a product by ID, partial update
 router.patch('/:id', async (req, res) => {
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
@@ -42,7 +42,7 @@ router.patch('/:id', async (req, res) => {
   }
 });
 
-// DELETE a product by ID
+// DELETE api/products a product by ID
 router.delete('/:id', async (req, res) => {
   try {
     const deletedProduct = await Product.findByIdAndDelete(req.params.id);

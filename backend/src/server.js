@@ -7,6 +7,7 @@ require('dotenv').config();
 // import routes
 const productRoutes = require('./routes/productRoutes');
 const userRoutes = require('./routes/userRoutes');
+const contactClientRoutes = require('./routes/contactClientRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
 const testTokenRoutes = require('./routes/testTokenRoutes');
 
@@ -35,6 +36,7 @@ app.get('/', (req, res) => {
 });
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/contact-client', contactClientRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/test-token', testTokenRoutes);
 

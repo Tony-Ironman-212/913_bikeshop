@@ -3,10 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
+// import cá nhân
+import { useAuth } from '../context/authContext';
+
 function CartDropdown(props) {
   const { isCartShown, setIsCartShown } = props;
   const cartRef = useRef(null);
   const navigate = useNavigate();
+  const { token, logout } = useAuth();
 
   // đóng dropdown khi click ra ngoài
   useEffect(() => {
@@ -24,6 +28,42 @@ function CartDropdown(props) {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  // xử lý khi click nút checkout
+  const handleCheckout = async () => {
+    // gọi api kiểm tra token còn hạn không
+    if (!token) {
+      alert('ログインしてください');
+      navigate('/checkout');
+      setIsCartShown(false);
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/test-token', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.status === 401) {
+        // token hết hạn
+        alert('ログインの有効期限が切れました。再度ログインしてください。');
+        logout();
+        navigate('/checkout');
+        setIsCartShown(false);
+        return;
+      }
+
+      // token hợp lệ, chuyển đến trang checkout
+      navigate('/checkout');
+      setIsCartShown(false);
+    } catch (error) {
+      console.error('Error checking token:', error);
+      alert('サーバーエラーが発生しました。後でもう一度お試しください。');
+      return;
+    }
+  };
 
   return (
     <div
@@ -80,7 +120,7 @@ function CartDropdown(props) {
         </p>
         <button
           className='w-full cursor-pointer rounded-sm bg-[var(--color-primary)] p-2 text-xl text-white'
-          onClick={() => navigate('/checkout')}
+          onClick={handleCheckout}
         >
           チェックアウト
         </button>

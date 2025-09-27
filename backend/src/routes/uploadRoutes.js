@@ -26,12 +26,12 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage: storage });
 
-// POST upload 1 ảnh
+// POST /api/upload/single upload 1 ảnh
 router.post('/single', upload.single('image'), (req, res) => {
   res.json({ imageUrl: req.file.path });
 });
 
-// POST upload nhiều ảnh
+// POST /api/upload/multiple upload nhiều ảnh
 router.post('/multiple', upload.array('images', 10), (req, res) => {
   const imageUrls = req.files.map((file) => file.path);
   res.json({ imageUrls });

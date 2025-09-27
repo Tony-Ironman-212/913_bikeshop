@@ -5,6 +5,12 @@ const validateField = (field, value, password) => {
       return value.trim() === '' ? '姓を入力してください' : '';
     case 'firstName':
       return value.trim() === '' ? '名を入力してください' : '';
+    case 'name':
+      return value.trim() === '' ? '名前を入力してください' : '';
+    case 'phoneNumber':
+      return value.trim() === '' ? '電話番号を入力してください' : '';
+    case 'message':
+      return value.trim() === '' ? 'メッセージを入力してください' : '';
     case 'email':
       const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
       return !emailRegex.test(value) ? '有効なEmailを入力してください' : '';

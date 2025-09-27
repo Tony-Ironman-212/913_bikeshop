@@ -242,7 +242,7 @@ function Register() {
         </p>
       </form>
 
-      {/* model xác nhận */}
+      {/* modal xác nhận */}
       {isModalOpen && (
         <div className='fixed inset-0 flex items-center justify-center bg-black/50'>
           <div className='w-[500px] rounded bg-white p-5'>

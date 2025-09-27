@@ -1,10 +1,32 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 // import cá nhân
 import ProductItem from '../components/ProductItem';
-import BannerList from '../components/BannerList';
 
 function Home() {
+  const [newProducts, setNewProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  // call api lấy danh sách sản phẩm mới nhất
+  useEffect(() => {
+    const fetchNewProducts = async () => {
+      try {
+        const response = await fetch('/api/products?sort=newest&limit=8');
+        const data = await response.json();
+        console.log('New products:', data);
+        setNewProducts(data);
+        setIsLoading(false);
+      } catch (err) {
+        console.error('Failed to fetch new products:', err);
+      }
+    };
+    fetchNewProducts();
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
       <div className='relative h-[550px] overflow-hidden'>
@@ -28,16 +50,10 @@ function Home() {
       <div className='mx-auto my-10 max-w-[1500px] px-5'>
         <h1 className='my-8 text-center text-3xl font-bold'>新着アイテム</h1>
         <div className='grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
-          <ProductItem />
-          <ProductItem />
-          <ProductItem />
-          <ProductItem />
-          <ProductItem />
-          <ProductItem />
-          <ProductItem />
-          <ProductItem />
+          {newProducts.map((product) => {
+            return <ProductItem key={product._id} product={product} />;
+          })}
         </div>
-        <BannerList />
       </div>
     </div>
   );
