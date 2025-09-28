@@ -32,9 +32,9 @@ export function AuthProvider({ children }) {
   };
 
   // debug log
-  useEffect(() => {
-    console.log('🔑 Auth state:', { user, token });
-  }, [user, token]);
+  // useEffect(() => {
+  //   console.log('🔑 Auth state:', { user, token });
+  // }, [user, token]);
 
   return (
     <AuthContext.Provider value={{ user, token, login, logout }}>
