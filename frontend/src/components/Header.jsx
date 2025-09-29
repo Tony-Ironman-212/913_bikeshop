@@ -12,6 +12,7 @@ import { faCircleUser } from '@fortawesome/free-regular-svg-icons';
 // import cá nhân
 import CartDropdown from './CartDropdown';
 import { useAuth } from '../context/authContext';
+import { useCart } from '../context/CartContext';
 
 function Header() {
   const [inputValue, setInputValue] = useState('');
@@ -22,6 +23,7 @@ function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useAuth();
+  const { cart } = useCart();
 
   // load lịch sử từ localStorage khi component mount
   useEffect(() => {

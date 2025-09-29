@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse } from '@fortawesome/free-solid-svg-icons';
 
+// import cá nhân
+import { useCart } from '../../context/CartContext';
+
 function ProductDetail() {
   const [product, setProduct] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -11,6 +14,9 @@ function ProductDetail() {
   const location = useLocation();
   const slug = location.pathname.split('/').pop();
 
+  const { addToCart } = useCart();
+
+  // fetch product details khi component mount
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -91,7 +97,10 @@ function ProductDetail() {
           >
             現社確認（来店ご予約）フォームはこちら
           </p>
-          <button className='mx-auto mb-4 block w-100 rounded border border-gray-500 px-4 py-2 font-semibold'>
+          <button
+            className='mx-auto mb-4 block w-100 rounded border border-gray-500 px-4 py-2 font-semibold'
+            onClick={() => addToCart(product)}
+          >
             カートに追加
           </button>
           <button className='mx-auto block w-100 rounded bg-[var(--color-primary)] px-4 py-2 font-semibold text-white'>

@@ -13,7 +13,6 @@ function Home() {
       try {
         const response = await fetch('/api/products?sort=newest&limit=8');
         const data = await response.json();
-        console.log('New products:', data);
         setNewProducts(data);
         setIsLoading(false);
       } catch (err) {
