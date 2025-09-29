@@ -7,7 +7,7 @@ import ScrollToTop from './components/ScrollToTop.jsx';
 
 createRoot(document.getElementById('root')).render(
   // <StrictMode>
-  <BrowserRouter>
+  <BrowserRouter window={window}>
     <ScrollToTop />
     <App />
   </BrowserRouter>

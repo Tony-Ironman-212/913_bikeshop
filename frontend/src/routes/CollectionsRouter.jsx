@@ -15,7 +15,7 @@ function CollectionsRouter() {
       <Route path='collections/bike' element={<Bike />} />
       <Route path='collections/frame' element={<Frame />} />
       <Route path='collections/wheel' element={<Wheel />} />
-      <Route path='collections/product/:slug' element={<ProductDetail />} />
+      <Route path='collections/products/:slug' element={<ProductDetail />} />
     </Route>
   );
 }
