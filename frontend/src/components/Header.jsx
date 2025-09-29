@@ -46,7 +46,7 @@ function Header() {
     setIsHistoryShown(false);
     inputElement.current.blur();
     // chuyển hướng hoặc thực hiện tìm kiếm ở đây
-    navigate(`/collections/search?query=${encodeURIComponent(inputValue)}`);
+    navigate(`/collections/search?search=${encodeURIComponent(inputValue)}`);
   };
 
   // xử lý khi chọn một mục từ lịch sử
