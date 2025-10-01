@@ -6,10 +6,10 @@ import App from './App.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
 
 createRoot(document.getElementById('root')).render(
-  // <StrictMode>
-  <BrowserRouter window={window}>
-    <ScrollToTop />
-    <App />
-  </BrowserRouter>
-  // </StrictMode>
+  <StrictMode>
+    <BrowserRouter window={window}>
+      <ScrollToTop />
+      <App />
+    </BrowserRouter>
+  </StrictMode>
 );

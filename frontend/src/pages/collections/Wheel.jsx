@@ -37,7 +37,9 @@ function Wheel() {
   useEffect(() => {
     const fetchWheelProducts = async () => {
       try {
-        const response = await fetch('/api/products/wheel');
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/products/wheel`
+        );
         const data = await response.json();
         setWheelProducts(data);
         setIsLoading(false);

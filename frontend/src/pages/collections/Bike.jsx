@@ -37,7 +37,9 @@ function Bike() {
   useEffect(() => {
     const fetchBikeProducts = async () => {
       try {
-        const response = await fetch('/api/products/bike');
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/products/bike`
+        );
         const data = await response.json();
         setBikeProducts(data);
         setIsLoading(false);

@@ -20,7 +20,9 @@ function ProductDetail() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`/api/products/${slug}`);
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/products/${slug}`
+        );
         const data = await response.json();
         setProduct(data);
         setIsLoading(false);

@@ -48,12 +48,15 @@ function CartDropdown(props) {
     }
 
     try {
-      const response = await fetch('/api/test-token', {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/test-token`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (response.status === 401) {
         // token hết hạn
         alert('ログインの有効期限が切れました。再度ログインしてください。');

@@ -18,7 +18,7 @@ function SearchResults() {
     const fetchSearchedProducts = async () => {
       try {
         const response = await fetch(
-          `/api/products/search?search=${searchTerm}`
+          `${import.meta.env.VITE_API_URL}/api/products/search?search=${searchTerm}`
         );
         const data = await response.json();
         console.log('searched products:', data);

@@ -81,19 +81,22 @@ function Register() {
   const submitRegister = async () => {
     try {
       // gửi data lên saver bằng api đã được cung cấp sẵn, fetch
-      const response = await fetch('/api/users/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          lastName,
-          firstName,
-          email,
-          password,
-          isAgreed,
-        }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/users/register`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            lastName,
+            firstName,
+            email,
+            password,
+            isAgreed,
+          }),
+        }
+      );
 
       // trường hợp đăng ký thất bại response.ok = false
       if (!response.ok) {

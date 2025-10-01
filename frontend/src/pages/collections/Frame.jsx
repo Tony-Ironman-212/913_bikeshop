@@ -37,7 +37,9 @@ function Frame() {
   useEffect(() => {
     const fetchFrameProducts = async () => {
       try {
-        const response = await fetch('/api/products/frame');
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/products/frame`
+        );
         const data = await response.json();
         setFrameProducts(data);
         setIsLoading(false);
