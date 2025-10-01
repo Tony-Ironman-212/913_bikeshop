@@ -14,7 +14,7 @@ function ProductDetail() {
   const location = useLocation();
   const slug = location.pathname.split('/').pop();
 
-  const { addToCart } = useCart();
+  const { addToCart, isCartOpen, setIsCartOpen } = useCart();
 
   // fetch product details khi component mount
   useEffect(() => {
@@ -37,16 +37,31 @@ function ProductDetail() {
 
   const imageUrls = product.images;
 
+  // xử lý khi bấm nút thêm vào giỏ hàng
+  const handleAddToCart = (e) => {
+    if (product.stock === 0) {
+      e.preventDefault();
+      return;
+    }
+    addToCart(product);
+    setIsCartOpen(true);
+  };
+
   return (
     <div className='mx-auto flex w-[1500px] gap-8 px-5 pt-12'>
       {/* hình ảnh */}
-      <div>
+      <div className='relative'>
         <div className='h-[400px] w-[600px]'>
           <img
             className='h-full w-full object-cover'
             src={imageUrls[bigImageIndex]}
             alt={`Product image ${bigImageIndex + 1}`}
           />
+          {product.stock === 0 && (
+            <span className='absolute top-0 right-0 bg-red-500 px-2 py-1 text-white'>
+              売り切れ
+            </span>
+          )}
         </div>
         <div className='mt-2 w-[600px] overflow-x-auto'>
           <div className='flex space-x-2'>
@@ -81,10 +96,12 @@ function ProductDetail() {
             </Link>
           </p>
           <h2 className='my-4 text-3xl font-semibold'>{product.name}</h2>
+
           <p className='text-xl font-semibold text-red-500'>
             ¥{product.price.toLocaleString()}
           </p>
           <p>税込です。 送料は無料です。</p>
+          <p>在庫：{product.stock}</p>
           <p className='my-4 border-b border-gray-800'></p>
         </header>
         <div>
@@ -99,13 +116,17 @@ function ProductDetail() {
           </p>
           <button
             className='mx-auto mb-4 block w-100 rounded border border-gray-500 px-4 py-2 font-semibold'
-            onClick={() => addToCart(product)}
+            disabled={product.stock === 0}
+            onClick={(e) => handleAddToCart(e)}
           >
-            カートに追加
+            {product.stock > 0 ? 'カートに追加' : '在庫切れ'}
           </button>
-          <button className='mx-auto block w-100 rounded bg-[var(--color-primary)] px-4 py-2 font-semibold text-white'>
-            今すぐ購入
-          </button>
+          {product.stock > 0 && (
+            <button className='mx-auto block w-100 rounded bg-[var(--color-primary)] px-4 py-2 font-semibold text-white'>
+              今すぐ購入
+            </button>
+          )}
+
           <div className='mt-8 flex gap-4'>
             <FontAwesomeIcon
               className='relative top-1 text-xl'

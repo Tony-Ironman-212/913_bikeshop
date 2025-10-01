@@ -8,7 +8,7 @@
 // tất nhiên là add hay remove thì cũng phải cập nhật localStorage nữa
 // export useCart custom hook để các component khác có thể dễ dàng sử dụng CartContext
 
-import { createContext, useContext, useState, useEffect, use } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 
 const CartContext = createContext();
 
@@ -17,13 +17,14 @@ export function CartProvider({ children }) {
     const storedCart = localStorage.getItem('cart');
     return storedCart ? JSON.parse(storedCart) : [];
   });
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
 
   //   hàm addToCart
-  const addToCart = async (product) => {
+  const addToCart = (product) => {
     setCart((prev) => {
       // trước khi thêm, kiếm tra xem sản phẩm đã có trong giỏ hàng chưa, nếu có rồi thì cộng 1 thêm quantity
       const existingProduct = prev.find((item) => item._id === product._id);
@@ -38,11 +39,50 @@ export function CartProvider({ children }) {
     });
   };
 
+  // hàm removeFromCart
+  const removeFromCart = (removeProductId) => {
+    console.log('Removing product with ID:', removeProductId);
+    setCart((prev) => prev.filter((item) => item._id !== removeProductId));
+  };
+
+  // xử lý khi bấm nút +
+  const incrementQuantity = (productId) => {
+    setCart((prev) =>
+      prev.map((item) =>
+        item._id === productId && item.quantity < item.stock
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      )
+    );
+  };
+
+  // xử lý khi bấm nút -
+  const decrementQuantity = (productId) => {
+    setCart((prev) =>
+      prev.map((item) =>
+        item._id === productId && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      )
+    );
+  };
+
   //debug log cart
   console.log('Cart updated:', cart);
 
   return (
-    <CartContext.Provider value={{ cart, setCart, addToCart }}>
+    <CartContext.Provider
+      value={{
+        cart,
+        setCart,
+        addToCart,
+        removeFromCart,
+        incrementQuantity,
+        decrementQuantity,
+        isCartOpen,
+        setIsCartOpen,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

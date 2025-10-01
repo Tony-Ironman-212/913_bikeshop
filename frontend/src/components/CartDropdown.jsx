@@ -5,12 +5,20 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 // import cá nhân
 import { useAuth } from '../context/authContext';
+import { useCart } from '../context/CartContext';
 
 function CartDropdown(props) {
-  const { isCartShown, setIsCartShown } = props;
+  const { isCartOpen, setIsCartOpen } = props;
   const cartRef = useRef(null);
   const navigate = useNavigate();
   const { token, logout } = useAuth();
+  const {
+    cart,
+    setCart,
+    removeFromCart,
+    incrementQuantity,
+    decrementQuantity,
+  } = useCart();
 
   // đóng dropdown khi click ra ngoài
   useEffect(() => {
@@ -20,7 +28,7 @@ function CartDropdown(props) {
         !cartRef.current.contains(event.target) &&
         !document.getElementById('cart-button').contains(event.target)
       ) {
-        setIsCartShown(false);
+        setIsCartOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -35,7 +43,7 @@ function CartDropdown(props) {
     if (!token) {
       alert('ログインしてください');
       navigate('/checkout');
-      setIsCartShown(false);
+      setIsCartOpen(false);
       return;
     }
 
@@ -51,13 +59,13 @@ function CartDropdown(props) {
         alert('ログインの有効期限が切れました。再度ログインしてください。');
         logout();
         navigate('/checkout');
-        setIsCartShown(false);
+        setIsCartOpen(false);
         return;
       }
 
       // token hợp lệ, chuyển đến trang checkout
       navigate('/checkout');
-      setIsCartShown(false);
+      setIsCartOpen(false);
     } catch (error) {
       console.error('Error checking token:', error);
       alert('サーバーエラーが発生しました。後でもう一度お試しください。');
@@ -71,49 +79,72 @@ function CartDropdown(props) {
       className='absolute top-12 right-0 z-10 max-h-[500px] w-100 overflow-y-auto rounded-b-xs bg-white px-4 pb-3 text-gray-800 shadow-md'
     >
       <div className='flex items-center justify-between border-b border-gray-400 py-2'>
-        <h1 className='text-xl font-semibold'>カート</h1>
+        <h1 className='text-xl font-semibold'>
+          カート({cart.reduce((total, item) => total + item.quantity, 0)})
+        </h1>
         <button
           className='cursor-pointer p-1 text-xl'
-          onClick={() => setIsCartShown(!isCartShown)}
+          onClick={() => setIsCartOpen(!isCartOpen)}
         >
           <FontAwesomeIcon icon={faXmark} />
         </button>
       </div>
+      {/* list sản phẩm trong cart */}
       <ul>
-        <p className='hidden'>カート商品がございません。</p>
-        <li className='my-3'>
-          <div className='flex gap-2'>
-            <img width={100} src='/img/cart_img_test.webp' alt='' />
-            <p className=''>AETHOS PRO FORCE ETAP AXS 54cm 2022年</p>
-          </div>
-          <div className='mt-1 flex items-end justify-between'>
-            <div className='flex items-center gap-4 border border-gray-200 px-2'>
-              <button className='cursor-pointer p-1 text-xl'>-</button>
-              <span className='text-xl font-semibold'>1</span>
-              <button className='cursor-pointer p-1 text-xl'>+</button>
-            </div>
-            <span>¥490,000</span>
-          </div>
-        </li>
-        <li className='my-3'>
-          <div className='flex gap-2'>
-            <img width={100} src='/img/cart_img_test.webp' alt='' />
-            <p className=''>AETHOS PRO FORCE ETAP AXS 54cm 2022年</p>
-          </div>
-          <div className='mt-1 flex items-end justify-between'>
-            <div className='flex items-center gap-4 border border-gray-200 px-2'>
-              <button className='cursor-pointer p-1 text-xl'>-</button>
-              <span className='text-xl font-semibold'>1</span>
-              <button className='cursor-pointer p-1 text-xl'>+</button>
-            </div>
-            <span>¥490,000</span>
-          </div>
-        </li>
+        {cart.length === 0 && (
+          <p className='py-8 text-center font-semibold'>
+            カート商品がございません。
+          </p>
+        )}
+
+        {cart.map((item, index) => {
+          return (
+            <li key={item._id} className='my-3'>
+              <div className='flex gap-2'>
+                <img width={100} src={item.images[0]} alt='' />
+                <p className=''>{item.name}</p>
+              </div>
+              <div className='mt-1 flex items-end justify-between'>
+                <div className='flex items-center gap-4'>
+                  <div className='flex items-center gap-4 border border-gray-200 px-2'>
+                    <button
+                      className='cursor-pointer p-1 text-xl'
+                      onClick={() => decrementQuantity(item._id)}
+                    >
+                      -
+                    </button>
+                    <span className='text-xl font-semibold'>
+                      {item.quantity}
+                    </span>
+                    <button
+                      className='cursor-pointer p-1 text-xl'
+                      onClick={() => incrementQuantity(item._id)}
+                    >
+                      +
+                    </button>
+                  </div>
+                  <button
+                    className='cursor-pointer p-1 text-red-500'
+                    onClick={() => removeFromCart(item._id)} // thay 'productId' bằng actual product ID
+                  >
+                    削除
+                  </button>
+                </div>
+                <span>¥{(item.price * item.quantity).toLocaleString()}</span>
+              </div>
+            </li>
+          );
+        })}
       </ul>
       <div className='border-t border-gray-400 py-2'>
         <div className='flex items-center justify-between'>
           <h1 className='text-xl font-semibold'>小計</h1>
-          <span className='text-xl font-semibold'>¥980,000</span>
+          <span className='text-xl font-semibold'>
+            ¥
+            {cart
+              .reduce((total, item) => total + item.price * item.quantity, 0)
+              .toLocaleString()}
+          </span>
         </div>
         <p className='my-2'>
           送料と割引コードはチェックアウト時に計算されます。

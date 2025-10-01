@@ -18,12 +18,11 @@ function Header() {
   const [inputValue, setInputValue] = useState('');
   const [historyList, setHistoryList] = useState([]);
   const [isHistoryShown, setIsHistoryShown] = useState(false);
-  const [isCartShown, setIsCartShown] = useState(false);
   const inputElement = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useAuth();
-  const { cart } = useCart();
+  const { cart, isCartOpen, setIsCartOpen } = useCart();
 
   // load lịch sử từ localStorage khi component mount
   useEffect(() => {
@@ -134,15 +133,21 @@ function Header() {
                   id='cart-button'
                   className='cursor-pointer p-1 text-2xl'
                   onClick={() => {
-                    setIsCartShown(!isCartShown);
+                    setIsCartOpen(!isCartOpen);
                   }}
                 >
                   <FontAwesomeIcon icon={faCartShopping} />
                 </button>
-                {isCartShown && (
+                {cart.length > 0 && (
+                  <span className='absolute top-0 right-0 flex size-4 items-center justify-center rounded-sm bg-red-500 text-[10px]'>
+                    {cart.reduce((total, item) => total + item.quantity, 0)}
+                  </span>
+                )}
+
+                {isCartOpen && (
                   <CartDropdown
-                    isCartShown={isCartShown}
-                    setIsCartShown={setIsCartShown}
+                    isCartOpen={isCartOpen}
+                    setIsCartOpen={setIsCartOpen}
                   />
                 )}
               </div>
