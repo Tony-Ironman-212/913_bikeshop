@@ -1,5 +1,5 @@
 import AppRouter from './routes/AppRouter';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider } from './context/authContext';
 import { CartProvider } from './context/CartContext';
 
 function App() {

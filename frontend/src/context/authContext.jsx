@@ -4,7 +4,7 @@ import { createContext, useContext, useState } from 'react';
 const AuthContext = createContext();
 
 // B2 tạo AuthProvider
-export function AuthProvider({ children }) {
+export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
     // lấy user từ localStorage nếu có
     const savedUser = localStorage.getItem('user');
@@ -41,7 +41,7 @@ export function AuthProvider({ children }) {
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
 // B3 tạo custom hook useAuth
 export function useAuth() {
