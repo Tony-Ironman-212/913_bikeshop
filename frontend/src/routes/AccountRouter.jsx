@@ -9,6 +9,7 @@ import Users from '../pages/account/admin/Users';
 import Orders from '../pages/account/admin/Orders';
 import { useAuth } from '../context/authContext';
 import PrivateRoute from '../components/PrivateRoute';
+import UserUpdate from '../pages/account/UserUpdate';
 
 function AccountRouter() {
   const { user } = useAuth();
@@ -44,6 +45,14 @@ function AccountRouter() {
           element={
             <PrivateRoute>
               <UserProfile />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path='account/user/update/:id'
+          element={
+            <PrivateRoute>
+              <UserUpdate />
             </PrivateRoute>
           }
         />

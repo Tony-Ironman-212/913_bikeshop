@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 
 // B1 tạo AuthContext
 const AuthContext = createContext();
@@ -31,13 +31,19 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('token');
   };
 
+  // cập nhật user khi có user update
+  const updateUser = (updateUser) => {
+    setUser(updateUser);
+    localStorage.setItem('user', JSON.stringify(updateUser));
+  };
+
   // debug log
-  // useEffect(() => {
-  //   console.log('🔑 Auth state:', { user, token });
-  // }, [user, token]);
+  useEffect(() => {
+    console.log('🔑 Auth state:', { user, token });
+  }, [user, token]);
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
+    <AuthContext.Provider value={{ user, token, login, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

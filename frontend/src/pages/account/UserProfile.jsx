@@ -13,6 +13,11 @@ function UserProfile() {
     }, 0);
   };
 
+  // xử lý khi bấm nút update
+  const handleNavigateUpdate = () => {
+    navigate(`/account/user/update/${user._id}`);
+  };
+
   if (!user) return null;
 
   return (
@@ -26,13 +31,14 @@ function UserProfile() {
           </p>
           <p>メールアドレス：{user.email}</p>
           <p>電話番号：{user.phone ? user.phone : '未設定'}</p>
+          <p>郵便番号：{user.zipCode ? user.zipCode : '未設定'}</p>
           <p>
             住所：
             {user.address ? user.address : '未設定'}
           </p>
           <button
             className='rounded bg-[var(--color-primary)] px-4 py-2 text-white'
-            onClick={() => console.log('Update user info')}
+            onClick={handleNavigateUpdate}
           >
             会員情報更新
           </button>

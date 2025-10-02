@@ -63,7 +63,7 @@ function Header() {
     if (user) {
       user.isAdmin
         ? navigate('/account/admin/products')
-        : navigate(`/account/user/${user.id}`);
+        : navigate(`/account/user/${user._id}`);
     } else {
       navigate('/account/login', { state: { from: location } });
     }

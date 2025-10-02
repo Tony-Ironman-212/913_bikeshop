@@ -22,6 +22,10 @@ const validateField = (field, value, password) => {
       return value !== password ? 'パスワードが一致しません' : '';
     case 'agreement':
       return !value ? '利用規約に同意する必要があります' : '';
+    case 'zipCode':
+      return value.trim() === '' ? '郵便番号を入力してください' : '';
+    case 'address':
+      return value.trim() === '' ? '住所を入力してください' : '';
   }
 };
 
