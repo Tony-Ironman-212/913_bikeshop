@@ -152,7 +152,7 @@ function Faq() {
           alt='banner'
         />
       </div>
-      <div className='mx-auto mt-5 max-w-[1000px] space-y-8 px-5 py-5'>
+      <div className='mx-auto mt-5 max-w-[1000px] space-y-8 px-3 py-5 lg:px-5'>
         <div>
           <h1 className='text-2xl font-bold'>販売について</h1>
           <div className='mt-5 flex flex-col space-y-4'>

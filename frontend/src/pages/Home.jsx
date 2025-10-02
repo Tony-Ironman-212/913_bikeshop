@@ -33,7 +33,9 @@ function Home() {
       <div className='relative h-[550px] overflow-hidden'>
         <Link to='/collections/all'>
           <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-white'>
-            <h1 className='text-[80px]/[80px] font-bold'>SPECIALIZED</h1>
+            <h1 className='text-[60px]/[60px] font-bold lg:text-[80px]/[80px]'>
+              SPECIALIZED
+            </h1>
             <h2 className='my-3 text-3xl font-semibold'>
               公式認定中古車ストア
             </h2>
@@ -48,7 +50,7 @@ function Home() {
           />
         </Link>
       </div>
-      <div className='mx-auto my-10 max-w-[1500px] px-5'>
+      <div className='mx-auto my-10 max-w-[1500px] px-3 lg:px-5'>
         <h1 className='my-8 text-center text-3xl font-bold'>新着アイテム</h1>
         <div className='grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
           {newProducts.map((product) => {

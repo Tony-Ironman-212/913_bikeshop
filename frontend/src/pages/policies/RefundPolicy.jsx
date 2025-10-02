@@ -1,6 +1,6 @@
 function RefundPolicy() {
   return (
-    <div className='mx-auto max-w-[800px] px-5 py-5'>
+    <div className='mx-auto max-w-[800px] px-3 py-5 lg:px-5'>
       <h1 className='mt-5 text-center text-3xl font-semibold'>返金ポリシー</h1>
       <div>
         <h2 className='text-xl font-semibold'>弊社事由の返品</h2>

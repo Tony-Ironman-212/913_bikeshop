@@ -50,10 +50,10 @@ function ProductDetail() {
   }
 
   return (
-    <div className='mx-auto flex w-[1500px] gap-8 px-5 pt-12'>
+    <div className='mx-auto gap-8 px-3 pt-6 lg:flex lg:max-w-[1500px] lg:px-5 lg:pt-12'>
       {/* hình ảnh */}
       <div className='relative'>
-        <div className='h-[400px] w-[600px]'>
+        <div className='lg:h-[400px] lg:w-[600px]'>
           <img
             className='h-full w-full object-cover'
             src={imageUrls[bigImageIndex]}
@@ -65,7 +65,7 @@ function ProductDetail() {
             </span>
           )}
         </div>
-        <div className='mt-2 w-[600px] overflow-x-auto'>
+        <div className='mt-2 overflow-x-auto lg:w-[600px]'>
           <div className='flex space-x-2'>
             {imageUrls.map((url, index) => {
               return (
@@ -86,7 +86,7 @@ function ProductDetail() {
         </div>
       </div>
       {/* thông tin sản phẩm */}
-      <div className='flex-1'>
+      <div className='flex-1 max-lg:mt-4'>
         <header>
           <p>
             <Link className='hover:underline' to='/'>
@@ -117,14 +117,14 @@ function ProductDetail() {
             現社確認（来店ご予約）フォームはこちら
           </p>
           <button
-            className='mx-auto mb-4 block w-100 rounded border border-gray-500 px-4 py-2 font-semibold'
+            className='mx-auto mb-4 block w-full max-w-100 rounded border border-gray-500 px-4 py-2 font-semibold'
             disabled={product.stock === 0}
             onClick={(e) => handleAddToCart(e)}
           >
             {product.stock > 0 ? 'カートに追加' : '在庫切れ'}
           </button>
           {product.stock > 0 && (
-            <button className='mx-auto block w-100 rounded bg-[var(--color-primary)] px-4 py-2 font-semibold text-white'>
+            <button className='mx-auto block w-full max-w-100 rounded bg-[var(--color-primary)] px-4 py-2 font-semibold text-white'>
               今すぐ購入
             </button>
           )}

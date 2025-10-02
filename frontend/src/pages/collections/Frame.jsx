@@ -68,7 +68,7 @@ function Frame() {
         imgPosition='center_70%'
       />
 
-      <div className='mx-auto mt-10 mb-30 flex max-w-[1500px] gap-x-4 px-5'>
+      <div className='mx-auto mt-10 mb-30 max-w-[1500px] gap-x-4 px-3 lg:flex lg:px-5'>
         {/* panel lọc sản phẩm */}
         <FilterToolPanel
           filter={filter}
@@ -79,7 +79,7 @@ function Frame() {
         />
 
         {/* product list */}
-        <div className='flex-1'>
+        <div className='flex-1 max-lg:mt-4'>
           <Link to='/collections/all'>
             <p className='text-blue-500 hover:underline'>全ての商品へ</p>
           </Link>

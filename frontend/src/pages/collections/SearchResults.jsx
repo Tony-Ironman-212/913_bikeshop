@@ -37,7 +37,7 @@ function SearchResults() {
 
   return (
     <div>
-      <div className='mx-auto my-10 max-w-[1500px] px-5'>
+      <div className='mx-auto my-10 max-w-[1500px] px-3 lg:px-5'>
         <h1 className='my-8 text-center text-3xl font-bold'>検索結果</h1>
         <div className='grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
           {searchedProducts.length === 0 ? (

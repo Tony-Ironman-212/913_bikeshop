@@ -37,7 +37,7 @@ function FilterToolPanel(props) {
 
   return (
     // Filter panel để lọc sản phẩm
-    <div className='w-[250px]'>
+    <div className='w-full lg:w-[250px]'>
       <h2 className='mb-4 ml-5 font-semibold'>商品フィルター</h2>
       <FilterTool
         title='出品状況'

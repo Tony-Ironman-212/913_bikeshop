@@ -72,12 +72,23 @@ function Header() {
   return (
     <header>
       <div className='bg-black text-white'>
-        <div className='mx-auto flex max-w-[1500px] justify-between gap-10 px-2 py-6 lg:px-10'>
-          <Link onClick={() => setInputValue('')} to='/'>
-            <img width={350} src='/img/specialized_logo.png' alt='' />
+        <div className='relative mx-auto max-w-[1500px] justify-between gap-10 p-3 lg:flex lg:px-10 lg:py-6'>
+          <Link
+            className='block w-[250px] lg:w-[350px]'
+            onClick={() => setInputValue('')}
+            to='/'
+          >
+            <img
+              className='h-full w-full'
+              src='/img/specialized_logo.png'
+              alt=''
+            />
           </Link>
-          <div className='relative flex flex-1 items-center rounded-lg bg-white px-4 text-gray-800'>
-            <span className='border-r border-gray-400 pr-4 text-2xl text-gray-600'>
+          <div className='relative mt-2 flex flex-1 items-center rounded-lg bg-white px-4 text-gray-800 lg:mt-0'>
+            <span
+              className='cursor-pointer border-r border-gray-400 pr-4 text-2xl text-gray-600'
+              onClick={handleSearch}
+            >
               <FontAwesomeIcon icon={faMagnifyingGlass} />
             </span>
             <form className='flex-1' onSubmit={handleSearch}>
@@ -114,8 +125,10 @@ function Header() {
               </ul>
             )}
           </div>
-          <div className='flex items-center text-white'>
-            {user && <span className='mr-1'>{user.firstName}</span>}
+          <div className='absolute top-2 right-4 flex items-center text-white lg:static lg:top-auto lg:right-auto'>
+            {user && (
+              <span className='mr-1 max-lg:hidden'>{user.firstName}</span>
+            )}
             <div className='flex items-center gap-4'>
               <div className='relative'>
                 <button

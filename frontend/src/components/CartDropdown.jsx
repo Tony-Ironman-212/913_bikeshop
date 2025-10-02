@@ -79,7 +79,7 @@ function CartDropdown(props) {
   return (
     <div
       ref={cartRef}
-      className='absolute top-12 right-0 z-10 max-h-[500px] w-100 overflow-y-auto rounded-b-xs bg-white px-4 pb-3 text-gray-800 shadow-md'
+      className='absolute top-12 right-0 z-10 w-100 max-w-[380px] overflow-y-auto rounded-b-xs bg-white px-4 pb-3 text-gray-800 shadow-md lg:max-h-[500px]'
     >
       <div className='flex items-center justify-between border-b border-gray-400 py-2'>
         <h1 className='text-xl font-semibold'>

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 function Privacy() {
   return (
-    <div className='mx-auto max-w-[1000px] px-5 py-5'>
+    <div className='mx-auto max-w-[1000px] px-3 py-5 lg:px-5'>
       <p>
         <Link className='hover:underline' to='/'>
           Home
