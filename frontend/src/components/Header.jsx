@@ -72,7 +72,7 @@ function Header() {
   return (
     <header>
       <div className='bg-black text-white'>
-        <div className='mx-auto flex max-w-[1500px] justify-between gap-10 px-10 py-6'>
+        <div className='mx-auto flex max-w-[1500px] justify-between gap-10 px-2 py-6 lg:px-10'>
           <Link onClick={() => setInputValue('')} to='/'>
             <img width={350} src='/img/specialized_logo.png' alt='' />
           </Link>

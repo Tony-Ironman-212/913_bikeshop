@@ -68,7 +68,7 @@ export function CartProvider({ children }) {
   };
 
   //debug log cart
-  console.log('Cart updated:', cart);
+  // console.log('Cart updated:', cart);
 
   return (
     <CartContext.Provider

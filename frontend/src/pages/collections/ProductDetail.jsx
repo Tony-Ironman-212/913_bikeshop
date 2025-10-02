@@ -31,9 +31,9 @@ function ProductDetail() {
       }
     };
     fetchProduct();
-  }, []);
+  }, [slug]); // thêm slug vào dependency
 
-  const imageUrls = product.images;
+  const imageUrls = product?.images || [];
 
   // xử lý khi bấm nút thêm vào giỏ hàng
   const handleAddToCart = (e) => {
