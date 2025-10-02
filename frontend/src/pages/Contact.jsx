@@ -10,7 +10,7 @@ function Contact() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [inquiryType, setInquiryType] = useState('');
   const [message, setMessage] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // state lưu lỗi cho từng trường
   const [fieldErrors, setFieldErrors] = useState({
