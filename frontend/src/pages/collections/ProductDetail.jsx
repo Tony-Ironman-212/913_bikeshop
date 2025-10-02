@@ -33,10 +33,6 @@ function ProductDetail() {
     fetchProduct();
   }, []);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
   const imageUrls = product.images;
 
   // xử lý khi bấm nút thêm vào giỏ hàng
@@ -48,6 +44,10 @@ function ProductDetail() {
     addToCart(product);
     setIsCartOpen(true);
   };
+
+  if (isLoading) {
+    return <div className='pt-5 text-center text-3xl'>Loading...</div>;
+  }
 
   return (
     <div className='mx-auto flex w-[1500px] gap-8 px-5 pt-12'>

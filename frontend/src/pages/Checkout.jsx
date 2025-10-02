@@ -1,8 +1,8 @@
 function Checkout() {
   return (
     <div>
-      <h1 className='text-2xl font-bold'>
-        Trang thanh toán, khách có thể thanh toán cho đơn hàng của mình
+      <h1 className='text-center text-2xl font-bold'>
+        チェックアウトページ - 準備中
       </h1>
     </div>
   );
