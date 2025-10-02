@@ -17,7 +17,7 @@ const port = process.env.PORT || 3000;
 //middleware
 app.use(
   cors({
-    origin: 'https://913-bikeshop.vercel.app', //thay đổi theo domain của bạn
+    origin: '*', //thay đổi theo domain của bạn
     credentials: true, //cho phép gửi cookie
   })
 );

@@ -25,7 +25,7 @@ function Home() {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className='pt-5 text-center text-3xl'>Loading...</div>;
   }
 
   return (
