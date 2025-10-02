@@ -247,8 +247,8 @@ function Register() {
 
       {/* modal xác nhận */}
       {isModalOpen && (
-        <div className='fixed inset-0 flex items-center justify-center bg-black/50'>
-          <div className='w-[500px] rounded bg-white p-5'>
+        <div className='fixed inset-0 z-10 flex items-center justify-center bg-black/50'>
+          <div className='w-[400px] rounded bg-white p-3 lg:w-[500px] lg:p-5'>
             <h2 className='text-center text-xl font-bold'>確認</h2>
             <p className='mb-4 text-center'>
               ↓以下の内容でアカウントを作成します↓
