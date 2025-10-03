@@ -23,7 +23,7 @@ function UserProfile() {
   return (
     <div className='mx-auto my-10 max-w-[1500px] px-3 lg:px-5'>
       <h1 className='text-center text-3xl font-bold'>マイページ</h1>
-      <div className='my-10 flex gap-8'>
+      <div className='my-10 gap-8 lg:flex'>
         <div className='my-5 flex flex-1/3 flex-col gap-2 text-lg'>
           <h2>会員情報</h2>
           <p>
