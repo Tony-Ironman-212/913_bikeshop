@@ -10,6 +10,7 @@ const userRoutes = require('./routes/userRoutes');
 const contactClientRoutes = require('./routes/contactClientRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
 const testTokenRoutes = require('./routes/testTokenRoutes');
+const orderRoutes = require('./routes/orderRoutes');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -44,6 +45,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/contact-client', contactClientRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/test-token', testTokenRoutes);
+app.use('/api/orders', orderRoutes);
 
 //start server
 app.listen(port, () => {

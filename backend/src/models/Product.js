@@ -7,7 +7,7 @@ const productSchema = new mongoose.Schema(
     name: { type: String, required: true },
     slug: { type: String, unique: true }, // bỏ required để cho nó auto gen
     price: { type: Number, required: true },
-    canBuy: { type: Boolean, default: true, required: true },
+    stock: { type: Number, required: true, min: 0 },
     images: [String], //mảng URL hình ảnh
     description: {
       year: String,

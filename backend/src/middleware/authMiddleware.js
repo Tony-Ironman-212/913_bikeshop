@@ -13,26 +13,34 @@
 
 const jwt = require('jsonwebtoken');
 
-function authMiddleware(req, res, next) {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1]; // Bearer <token>
-
-  if (!token) {
-    return res.status(401).json({ message: '認証トークンが必要です' });
-  }
-
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) {
-      if (err.name === 'TokenExpiredError') {
-        return res
-          .status(401)
-          .json({ message: '認証トークンの有効期限が切れています' });
-      }
-      return res.status(403).json({ message: '無効な認証トークンです' });
+const authMiddleware = (req, res, next) => {
+  try {
+    // Lấy token từ header Authorization: Bearer <token>
+    const authHeader = req.headers['authorization'];
+    if (!authHeader) {
+      return res.status(401).json({ message: '認証トークンが必要です' });
     }
-    req.user = decoded; // lưu thông tin user vào req.user
+
+    const token = authHeader.split(' ')[1]; // lấy phần token sau "Bearer"
+    if (!token) {
+      return res.status(401).json({ message: '認証トークンが必要です' });
+    }
+
+    // Verify token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Gắn thông tin user vào req.user để route dùng
+    req.user = decoded;
+
     next();
-  });
-}
+  } catch (err) {
+    if (err.name === 'TokenExpiredError') {
+      return res
+        .status(401)
+        .json({ message: '認証トークンの有効期限が切れています' });
+    }
+    return res.status(403).json({ message: '無効な認証トークンです' });
+  }
+};
 
 module.exports = authMiddleware;

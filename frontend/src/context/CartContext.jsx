@@ -41,7 +41,6 @@ export function CartProvider({ children }) {
 
   // hàm removeFromCart
   const removeFromCart = (removeProductId) => {
-    console.log('Removing product with ID:', removeProductId);
     setCart((prev) => prev.filter((item) => item._id !== removeProductId));
   };
 

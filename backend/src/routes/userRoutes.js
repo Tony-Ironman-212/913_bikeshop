@@ -93,7 +93,7 @@ router.post('/login', async (req, res) => {
       },
       process.env.JWT_SECRET,
       {
-        expiresIn: '1h', // token có hạn trong 1 giờ
+        expiresIn: '24h', // token có hạn trong 24 giờ
       }
     );
 

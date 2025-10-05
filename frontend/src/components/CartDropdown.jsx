@@ -38,7 +38,13 @@ function CartDropdown(props) {
   }, []);
 
   // xử lý khi click nút checkout
-  const handleCheckout = async () => {
+  const handleCheckout = async (e) => {
+    // nếu cart rỗng thì vô hiệu hóa nút checkout
+    if (cart.length === 0) {
+      alert('カート商品がございません。');
+      return;
+    }
+
     // gọi api kiểm tra token còn hạn không
     if (!token) {
       alert('ログインしてください');
@@ -79,7 +85,7 @@ function CartDropdown(props) {
   return (
     <div
       ref={cartRef}
-      className='absolute top-12 right-0 z-10 w-100 max-w-[380px] overflow-y-auto rounded-b-xs bg-white px-4 pb-3 text-gray-800 shadow-md lg:max-h-[500px]'
+      className='absolute top-12 right-0 z-10 w-[calc(100vw-40px)] overflow-y-auto rounded-b-xs bg-white px-4 pb-3 text-gray-800 shadow-md lg:max-h-[500px] lg:w-[500px]'
     >
       <div className='flex items-center justify-between border-b border-gray-400 py-2'>
         <h1 className='text-xl font-semibold'>
@@ -154,7 +160,7 @@ function CartDropdown(props) {
         </p>
         <button
           className='w-full cursor-pointer rounded-sm bg-[var(--color-primary)] p-2 text-xl text-white'
-          onClick={handleCheckout}
+          onClick={(e) => handleCheckout(e)}
         >
           チェックアウト
         </button>
