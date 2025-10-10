@@ -151,4 +151,17 @@ router.post('/update/:id', async (req, res) => {
   }
 });
 
+// GET api/users/id/:id lấy chi tiết user theo ID, cho admin
+router.get('/id/:id', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).select('-password');
+    if (!user) {
+      return res.status(404).json({ message: 'ユーザーが見つかりません' });
+    }
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ message: 'サーバーエラーが発生しました' });
+  }
+});
+
 module.exports = router;

@@ -14,7 +14,8 @@ router.get('/', async (req, res) => {
       const orders = await Order.find()
         .populate('user', 'firstName lastName email')
         .populate('items.product', 'name price')
-        .sort({ createdAt: -1 });
+        .sort({ createdAt: -1 })
+        .select('+isDeleted'); // thêm trường isDeleted vào kết quả truy vấn
       return res.json(orders);
     }
 
@@ -48,7 +49,9 @@ router.get('/:id', async (req, res) => {
   try {
     const order = await Order.findById(req.params.id)
       .populate('user', 'firstName lastName email')
-      .populate('items.product', 'name price');
+      .populate('items.product', 'name price')
+      .select('+isDeleted'); // thêm trường isDeleted vào kết quả truy vấn
+
     res.json(order);
   } catch (err) {
     res.status(500).json({ message: 'サーバーエラー' });
@@ -116,6 +119,77 @@ router.post('/', authMiddleware, async (req, res) => {
     session.endSession();
     console.error(err);
     res.status(500).json({ message: 'サーバーエラー', error: err.message });
+  }
+});
+
+// PATH /api/orders/:id cập nhật trạng thái đơn hàng
+router.patch('/:id', async (req, res) => {
+  try {
+    const { paymentInfo, shippingAddress, shippingStatus } = req.body;
+
+    // validate dữ liệu đầu vào
+    if (!paymentInfo || !shippingAddress || !shippingStatus) {
+      return res.status(400).json({ message: '必要な情報が不足しています' });
+    }
+
+    const updatedOrder = await Order.findByIdAndUpdate(
+      req.params.id,
+      {
+        paymentInfo,
+        shippingAddress,
+        shippingStatus,
+      },
+      { new: true }
+    );
+
+    if (!updatedOrder) {
+      return res.status(404).json({ message: '注文が見つかりません' });
+    }
+
+    res.json(updatedOrder);
+  } catch (err) {
+    res.status(500).json({ message: 'サーバーエラー' });
+  }
+});
+
+// PATCH /api/orders/:id/cancel xóa mềm đơn hàng (hủy đơn), ngoài ra còn phải trả về lại số lượng sản phẩm về lại như trước khi order
+router.patch('/:id/cancel', async (req, res) => {
+  // b1 tạo phiên session và bắt đầu giao dịch startTransaction
+  const session = await mongoose.startSession();
+  session.startTransaction();
+  try {
+    // b2 lấy items từ req.body để tìm document tương ứng và cập nhật lại stock của sản phẩm
+    const { items } = req.body;
+
+    // b3 validate sơ bộ dữ liệu đầu vào
+    if (!items || items.length === 0) {
+      return res.status(400).json({ message: '注文商品が必要です' });
+    }
+
+    // b4 sửa lại stock của product
+    for (const item of items) {
+      const product = await Product.findById(item.product).session(session);
+      if (!product) {
+        throw new Error('商品が見つかりません: ' + item.product);
+      }
+      product.stock += item.quantity; // trả lại số lượng sản phẩm về lại như trước khi order
+      await product.save({ session });
+    }
+
+    // b5 cập nhật isDeleted của order = true
+    await Order.findByIdAndUpdate(
+      req.params.id,
+      { isDeleted: true },
+      { session }
+    );
+
+    // b6 commitTransaction và kết thúc phiên session
+    await session.commitTransaction();
+    session.endSession();
+
+    res.json({ message: '注文が正常にキャンセルされました' });
+  } catch (err) {
+    res.status(500).json({ message: 'サーバーエラー' });
   }
 });
 

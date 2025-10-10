@@ -23,6 +23,7 @@ const productSchema = new mongoose.Schema(
       },
       condition: [String],
     },
+    isDeleted: { type: Boolean, default: false, select: false }, //xóa mềm
   },
   { timestamps: true }
 );

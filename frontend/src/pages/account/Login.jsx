@@ -89,7 +89,7 @@ function Login() {
       //B5 điều hướng về trang trước đó
 
       data.user.isAdmin
-        ? navigate('/account/admin/products', { replace: true })
+        ? navigate('/account/admin/orders', { replace: true })
         : navigate(from, { replace: true });
     } catch (err) {
       console.error('🚨 Lỗi kết nối:', err);

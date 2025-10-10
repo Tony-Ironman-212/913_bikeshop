@@ -23,4 +23,17 @@ router.post('/', async (req, res) => {
   }
 });
 
+// GET api/contact-client/:id lấy chi tiết contact từ client, cho admin xem
+router.get('/:id', async (req, res) => {
+  try {
+    const contact = await ContactFromClient.findById(req.params.id);
+    if (!contact) {
+      return res.status(404).json({ message: '問い合わせが見つかりません' });
+    }
+    res.json(contact);
+  } catch (err) {
+    res.status(500).json({ message: 'サーバーエラーが発生しました' });
+  }
+});
+
 module.exports = router;

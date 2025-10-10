@@ -62,7 +62,7 @@ function Header() {
   const handleLoginClick = () => {
     if (user) {
       user.isAdmin
-        ? navigate('/account/admin/products')
+        ? navigate('/account/admin/orders')
         : navigate(`/account/user/${user._id}`);
     } else {
       navigate('/account/login', { state: { from: location } });

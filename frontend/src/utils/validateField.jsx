@@ -26,6 +26,13 @@ const validateField = (field, value, password) => {
       return value.trim() === '' ? '郵便番号を入力してください' : '';
     case 'address':
       return value.trim() === '' ? '住所を入力してください' : '';
+
+    case 'productName':
+      return value.trim() === '' ? '商品名を入力してください' : '';
+    case 'price':
+      return value.trim() === '' ? '価格を入力してください' : '';
+    case 'stock':
+      return value.trim() === '' ? '在庫を入力してください' : '';
   }
 };
 

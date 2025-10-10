@@ -64,8 +64,13 @@ home (host)
 |    |--user/:id
 |    |--admin
 |        |--products (quản lý sản phẩm)
+|        |   |products/:id (trang chi tiết sản phẩm để thêm sửa xóa)
 |        |--orders (quản lý đơn hàng)
+|        |   |orders/:id (trang chi tiết order để thêm sửa xóa)
 |        |--users (quản lý users)
+|        |   |users/:id (trang chi tiết user để thêm sửa xóa)
+|        |--contacts (quản lý liên lạc của khách)
+|            |contacts/:id (trang chi liên lạc của khách để thêm sửa xóa)
 |
 |--cart
 |

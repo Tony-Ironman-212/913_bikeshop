@@ -3,7 +3,7 @@ function ContactInput(props) {
     <fieldset className='my-5 flex flex-col'>
       <label htmlFor={props.id}>
         {props.label}
-        <span className='text-red-500'>*</span>
+        {props.hideRedStar ? '' : <span className='text-red-500'>*</span>}
       </label>
       <input
         className='border border-gray-300 p-2 text-gray-800'
