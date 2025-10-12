@@ -302,9 +302,9 @@ function ImagesUpload() {
           />
           <ContactInput
             id='size'
-            label='49'
+            label='サイズ'
             type='text'
-            placeholder='サイズを入力してください'
+            placeholder='49'
             hideRedStar={true}
             value={description.size}
             onChange={(e) =>

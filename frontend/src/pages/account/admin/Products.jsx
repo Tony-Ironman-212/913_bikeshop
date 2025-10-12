@@ -64,7 +64,11 @@ function Products() {
                 <td>{product.type}</td>
                 <td>{product.name}</td>
                 <td>¥{product.price.toLocaleString()}</td>
-                <td>{product.stock}</td>
+                <td
+                  className={`${product.stock === 0 ? 'bg-red-500 text-white' : ''}`}
+                >
+                  {product.stock}
+                </td>
                 <td>
                   <button
                     className='text-blue-500'
