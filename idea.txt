@@ -72,8 +72,6 @@ home (host)
 |        |--contacts (quản lý liên lạc của khách)
 |            |contacts/:id (trang chi liên lạc của khách để thêm sửa xóa)
 |
-|--cart
-|
 |--checkout (layout riêng)
 |
 |--not found (ngoài những địa chỉ quy định trên thì là 404 - Page Not Found)

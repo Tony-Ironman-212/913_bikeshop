@@ -93,7 +93,6 @@ function Contact() {
         throw new Error('サーバーエラーが発生しました');
       }
       const data = await response.json();
-      console.log(data.message);
       alert(
         'お問い合わせありがとうございました。3営業日以内にご連絡いたします。'
       );

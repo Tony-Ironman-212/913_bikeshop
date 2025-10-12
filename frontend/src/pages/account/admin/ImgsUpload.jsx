@@ -31,7 +31,7 @@ function ImagesUpload() {
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  console.log(type, name, price, stock, description, sizeInfo, specInfo);
+  // console.log(type, name, price, stock, description, sizeInfo, specInfo);
 
   // xử lý onChange input file
   const handleFileChange = (e) => {
@@ -92,12 +92,6 @@ function ImagesUpload() {
       case 'stock':
         setStock(value);
         break;
-      case 'message':
-        setMessage(value);
-        e.target.style.height = 'auto'; // reset height
-        e.target.style.height = `${e.target.scrollHeight}px`; // set height theo scrollHeight
-
-        break;
     }
     setFieldErrors((prevErrors) => ({
       ...prevErrors,
@@ -120,7 +114,6 @@ function ImagesUpload() {
       .filter((item) => item !== '');
     setConditionArray(conditionArray);
   }, [description.condition]);
-  console.log(conditionArray);
 
   // handle chặn submit default của form
   const handleSubmit = (e) => {
@@ -246,7 +239,7 @@ function ImagesUpload() {
             id='name'
             label='商品名'
             type='text'
-            placeholder='商品名を入力してください'
+            placeholder='S-work Tarmac SL7'
             value={name}
             onChange={(e) =>
               handleChange('productName', e.target.value, validateField, e)
@@ -260,7 +253,7 @@ function ImagesUpload() {
             id='price'
             label='価格'
             type='text'
-            placeholder='価格を入力してください'
+            placeholder='400000'
             value={price}
             onChange={(e) =>
               handleChange('price', e.target.value, validateField, e)
@@ -272,7 +265,7 @@ function ImagesUpload() {
             id='stock'
             label='在庫'
             type='text'
-            placeholder='在庫を入力してください'
+            placeholder='1'
             value={stock}
             onChange={(e) =>
               handleChange('stock', e.target.value, validateField, e)
@@ -297,7 +290,7 @@ function ImagesUpload() {
             id='year'
             label='年式'
             type='text'
-            placeholder='年式を入力してください'
+            placeholder='2025年'
             hideRedStar={true}
             value={description.year}
             onChange={(e) =>
@@ -309,7 +302,7 @@ function ImagesUpload() {
           />
           <ContactInput
             id='size'
-            label='サイズ'
+            label='49'
             type='text'
             placeholder='サイズを入力してください'
             hideRedStar={true}
@@ -325,7 +318,7 @@ function ImagesUpload() {
             id='weight'
             label='重量'
             type='text'
-            placeholder='重量を入力してください'
+            placeholder='8.5kg'
             hideRedStar={true}
             value={description.weight}
             onChange={(e) =>
@@ -353,7 +346,7 @@ function ImagesUpload() {
             id='topTube'
             label='トップチューブ'
             type='text'
-            placeholder='トップチューブサイズを入力してください'
+            placeholder='530mm'
             hideRedStar={true}
             value={sizeInfo.topTube}
             onChange={(e) =>
@@ -364,7 +357,7 @@ function ImagesUpload() {
             id='seatTube'
             label='シートチューブ'
             type='text'
-            placeholder='シートチューブサイズを入力してください'
+            placeholder='515mm'
             hideRedStar={true}
             value={sizeInfo.seatTube}
             onChange={(e) =>
@@ -377,7 +370,7 @@ function ImagesUpload() {
             id='group'
             label='グループセット'
             type='text'
-            placeholder='グループセットを入力してください'
+            placeholder='Shimano Ultegra R8000'
             hideRedStar={true}
             value={specInfo.group}
             onChange={(e) =>
@@ -388,7 +381,7 @@ function ImagesUpload() {
             id='wheel'
             label='ホイール'
             type='text'
-            placeholder='ホイールを入力してください'
+            placeholder='Roval CLX 50'
             hideRedStar={true}
             value={specInfo.wheel}
             onChange={(e) =>

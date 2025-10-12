@@ -74,7 +74,6 @@ function Login() {
         }
       );
       const data = await response.json();
-      console.log('data:', data);
 
       // B2 trường hợp login thất bại, response.ok = false
       if (!response.ok) {

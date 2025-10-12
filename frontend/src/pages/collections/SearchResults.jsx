@@ -21,7 +21,6 @@ function SearchResults() {
           `${import.meta.env.VITE_API_URL}/api/products/search?search=${searchTerm}`
         );
         const data = await response.json();
-        console.log('searched products:', data);
         setSearchedProducts(data);
         setIsLoading(false);
       } catch (err) {

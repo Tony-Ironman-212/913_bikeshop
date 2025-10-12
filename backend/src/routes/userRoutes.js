@@ -10,6 +10,13 @@ const router = express.Router();
 // GET api/users
 router.get('/', async (req, res) => {
   try {
+    const { sort } = req.query;
+    if (sort === 'newest') {
+      const users = await User.find()
+        .sort({ createdAt: -1 })
+        .select('-password'); // không trả về trường password
+      return res.json(users);
+    }
     const users = await User.find().select('-password'); // không trả về trường password
     res.json(users);
   } catch (err) {

@@ -5,6 +5,11 @@ const ContactFromClient = require('../models/ContactFromClient');
 // GET api/contact-client lấy toàn bộ contact từ client
 router.get('/', async (req, res) => {
   try {
+    const { sort } = req.query;
+    if (sort === 'newest') {
+      const contacts = await ContactFromClient.find().sort({ createdAt: -1 });
+      return res.json(contacts);
+    }
     const contacts = await ContactFromClient.find();
     res.json(contacts);
   } catch (err) {

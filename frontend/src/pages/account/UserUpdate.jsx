@@ -27,8 +27,8 @@ function UserUpdate() {
     addressError: '',
   });
 
-  console.log(lastName, firstName, phoneNumber, zipCode, address);
-  console.log(fieldErrors);
+  // console.log(lastName, firstName, phoneNumber, zipCode, address);
+  // console.log(fieldErrors);
 
   // handle change cho từng trường
   const handleChange = (field, value, validateField, password) => {
@@ -105,7 +105,7 @@ function UserUpdate() {
 
       // trường hợp thành công lấy data server trả về, và log ra,
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       // cập nhật user mới vào context
       const updatedUser = data.user;
       updateUser(updatedUser);

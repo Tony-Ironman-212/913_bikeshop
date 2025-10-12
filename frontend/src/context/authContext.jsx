@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
 
   // debug log
   useEffect(() => {
-    console.log('🔑 Auth state:', { user, token });
+    // console.log('🔑 Auth state:', { user, token });
   }, [user, token]);
 
   return (

@@ -5,19 +5,20 @@ function Products() {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
 
-  // call api lấy danh sách products
+  // call api lấy danh sách products cho admin
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        // api lấy danh sách products theo thứ tự mới nhất là /api/products?sort=newest
+        // api lấy danh sách products theo thứ tự mới nhất là /api/products/admin/all?sort=newest
         const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/products?sort=newest`
+          `${import.meta.env.VITE_API_URL}/api/products/admin/all?sort=newest`
         );
 
         if (!response.ok) {
           throw new Error('ネットワーク応答に問題があります');
         }
         const data = await response.json();
+        console.log('Fetched products:', data);
         setProducts(data);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -33,7 +34,7 @@ function Products() {
       <h1 className='mb-4 text-center text-lg font-semibold text-red-600 lg:hidden'>
         パソコン画面にてご確認ください。
       </h1>
-      <table className='w-full max-lg:hidden'>
+      <table className='mb-20 w-full max-lg:hidden'>
         <thead className='border-b-2 text-left'>
           <tr>
             <th>商品ID</th>
